@@ -55,7 +55,7 @@ session_start();
                 <img class="competence_logo" src="image/web_designerL.png" alt="">
             </div>
             <div class="competence_infos">Un graphiste est un professionnel de la communication qui conçoit des solutions de communication visuelle. Il travaille sur le sens des messages à l'aide des formes graphiques qu'il utilise sur tout type de supports.</div>
-            <div class="competence_recherche"><a href="competence_inscrits.php?competence=web_designer"><input class="competence_bouton" type="submit" value="Rechercher un web-designer"></a></div>
+            <div class="competence_recherche"><a href="competence_inscrits.php?competence=web-designer"><input class="competence_bouton" type="submit" value="Rechercher un web-designer"></a></div>
         </div>
         <div class="competence_carte">
             <div class="competence_image">

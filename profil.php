@@ -11,6 +11,7 @@ while ($donnees = $reponse->fetch()) {
     $date_inscription = $donnees['date_inscription'];
     $photo_profil = $donnees['photo_profil'];
     $mail = $donnees['mail'];
+    $id= $donnees['id'];
 }
 ?>
 
@@ -50,7 +51,58 @@ while ($donnees = $reponse->fetch()) {
             <h6>Date d'inscription: <?php echo $date_inscription ?></h6>
         </div>
     </div>
-
+    <h1>Consultez toutes les idées de projet de <?php echo $nom .' '. $prenom?></h1>
+    <div class="liste_projet">
+        <?php
+        $bdd = new PDO('mysql:host=127.0.0.1;dbname=mydevteam;charset=utf8', 'phpmyadmin', 'Workout974!', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $reponse = $bdd->query('SELECT * FROM projet WHERE id_chef="' . $id . '" ORDER BY id DESC ');
+        while ($donnees = $reponse->fetch()) {
+            echo '<div class="projet_carte">';
+            echo '<div class="projet_chef">';
+            echo '<a href="profil.php?id=' . $donnees['id_chef'] . '"><img class="projet_profil_logo" src="upload/' . $donnees['photo_profil'] . '" alt=""></a>';
+            echo '<div class="projet_noms">';
+            echo '<h3>' . $donnees['nom'] . '</h3>';
+            echo '<h3>' . $donnees['prenom'] . '</h3>';
+           
+            echo '<a class="competence_bouton" href="modifier_projet.php?id_projet=' . $donnees['id'] . '">Modifier le projet</a>';
+            echo '<form method="post" action="delete.php">
+            <input type="hidden" value="' . $donnees['id'] . '" name="id_projet">
+            <input class="competence_bouton" type="submit" value="Supprimer le projet" name="supprimer">
+          </form>';
+            echo '</div>';
+            echo '</div>';
+            echo '<div class="projet_infos">';
+            echo '<h2 class="projet_titre">' . $donnees['titre'] . '</h2>';
+            echo '<p class="projet_description">' . $donnees['description'] . '</p>';
+            echo '</div>';
+            echo '<div class="projet_tip">Compétences recherchées</div>';
+            echo '<div class="projet_competence">';
+            if ($donnees['graphiste'] == 1) {
+                echo '<img class="projet_competence_logo" src="image/graphiste.png" alt="">';
+            }
+            if ($donnees['dev_front'] == 1) {
+                echo '<img class="projet_competence_logo" src="image/dev_front.png" alt="">';
+            }
+            if ($donnees['dev_mobile'] == 1) {
+                echo '<img class="projet_competence_logo" src="image/dev_mobile.png" alt="">';
+            }
+            if ($donnees['dev_back'] == 1) {
+                echo '<img class="projet_competence_logo" src="image/dev_back.png" alt="">';
+            }
+            if ($donnees['web_designer'] == 1) {
+                echo '<img class="projet_competence_logo" src="image/web_designer.png" alt="">';
+            }
+            if ($donnees['social'] == 1) {
+                echo '<img class="projet_competence_logo" src="image/social.png" alt="">';
+            }
+            if ($donnees['expert'] == 1) {
+                echo '<img class="projet_competence_logo" src="image/cyber.png" alt="">';
+            }
+            echo '</div>';
+            echo '</div>';
+        }
+        ?>
+    </div>
     <?php
     include('footer.php');
     ?>

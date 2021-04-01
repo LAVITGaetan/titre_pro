@@ -473,6 +473,19 @@ cursor: pointer;
 .modifier_projet:hover{
     cursor: pointer;
 }
+/*Modifier son profil*/
+
+.profil_actuel_li{
+    float: left;
+    list-style-type: none;
+    width: 25%;
+    text-align: center;
+}
+
+.profil_nouveau{
+    display: flex;
+    justify-content: space-evenly;
+}
 
 /* Liste des projets*/
 

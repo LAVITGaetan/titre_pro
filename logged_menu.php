@@ -21,6 +21,6 @@
 <?php
 if (isset($_POST['deconnexion'])) {
     session_destroy();
-    header('Refresh:0;');
+    header('location:accueil.php');
 }
 ?>

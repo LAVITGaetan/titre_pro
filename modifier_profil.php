@@ -33,18 +33,42 @@ while ($donnees = $reponse->fetch()) {
     <div class="profil">
         <div class="profil_actuel">
             <ul>
-                <li><?php echo $_SESSION['nom'];?></li>
-                <li><?php echo $_SESSION['prenom'];?></li>
-                <li><?php echo $_SESSION['mail'];?></li>
-                <li><?php echo $_SESSION['nom'];?></li>
+                <li class="profil_actuel_li"><?php echo $_SESSION['nom']; ?></li>
+                <li class="profil_actuel_li"><?php echo $_SESSION['prenom']; ?></li>
+                <li class="profil_actuel_li"><?php echo $_SESSION['mail']; ?></li>
             </ul>
         </div>
-        <form class="profil_upload" action="upload-manager.php" method="post" enctype="multipart/form-data">
-                <input class="selection_photo" type="file" name="photo">
-                <input class="competence_bouton" type="submit" name="upload" value="Modifier la photo">
+
+        <div class="profil_nouveau">
+            <form method="post">
+                <label for="">Nom
+                    <input type="text" name="nom" value="<?php echo $_SESSION['nom']; ?>"></label><br>
+                <label for="">Prenom
+                    <input type="text" name="prenom" value="<?php echo $_SESSION['prenom']; ?>"></label><br>
+                <label for="">Addresse mail
+                    <input type="mail" name="mail" value="<?php echo $_SESSION['mail']; ?>"></label><br>
+                    <label for="">Votre ancien mot de passe
+                <input type="password"></label><br>
+                <label for="">Votre nouveau mot de passe
+                <input type="password"></label>
+                <input class="competence_bouton" type="submit" name="modifier_profil" value="Modifier votre profil">
             </form>
-        <div class="profil_nouveau"></div>
+        </div>
+        <form class="profil_upload" action="upload-manager.php" method="post" enctype="multipart/form-data">
+            <input class="selection_photo" type="file" name="photo">
+            <input class="competence_bouton" type="submit" name="upload" value="Modifier la photo">
+        </form>
     </div>
+    <?php
+    if (isset($_POST['modifier_profil'])) {
+        $bdd = new PDO('mysql:host=127.0.0.1;dbname=mydevteam;charset=utf8', 'phpmyadmin', 'Workout974!', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $reponse = $bdd->query('SELECT * FROM membre WHERE id ="' . $_SESSION['id'] . '"');
+
+        $requete ='UPDATE membre SET nom="' . $_POST['nom'] . '", prenom="' . $_POST['prenom'] . '", mail="' . $_POST['mail'] . '" WHERE id="' . $_SESSION['id'] . '"';
+        $resultat = $bdd->query($requete);
+        echo $requete;
+    }
+    ?>
     <?php
     include('footer.php');
     ?>
