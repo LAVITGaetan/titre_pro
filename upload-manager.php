@@ -7,7 +7,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Vérifier que le fichier ne contienne pas d'erreurs et récuperer le nom, la taille et le type de l'image
     if(isset($_FILES["photo"]) && $_FILES["photo"]["error"] == 0){
         $allowed = array("jpg" => "image/jpg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png");
-        $filename = $_FILES["photo"]["name"];
+        $filename = $_SESSION['id'] .'_' . $_FILES["photo"]["name"];
         $filetype = $_FILES["photo"]["type"];
         $filesize = $_FILES["photo"]["size"];
     
@@ -43,7 +43,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 session_start();
                 $_SESSION['photo_profil'] = $filename;
                 header('location:espace_membre.php');
-            } 
+            }
         } else{
             echo "Une erreur est survenue, réessayez."; 
         }

@@ -10,8 +10,13 @@
 </head>
 
 <body>
+    <!-- Menu de la page -->
     <?php
-    include('menu.php');
+    if (isset($_SESSION['id'])) {
+        include('logged_menu.php');
+    } else {
+        include('menu.php');
+    }
     ?>
 
     <!-- Formulaire d'inscription -->
@@ -30,7 +35,7 @@
 
         <!-- prenom-->
         <label class="label" for="prenom">Prenom<br>
-            <input class="input_formulaire" id="prenom" type="text" name="prenom" pattern="^(?=.{5,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z._]+(?<![_.])$"><br />
+            <input class="input_formulaire" id="prenom" type="text" name="prenom" pattern="^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z._]+(?<![_.])$"><br />
         </label>
 
         <!-- Email-->

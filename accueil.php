@@ -1,14 +1,5 @@
 <?php
 session_start();
-echo $_SESSION['id'];
-echo $_SESSION['nom'];
-echo $_SESSION['prenom'];
-echo $_SESSION['date_inscription'] ;
-echo $_SESSION['mail'];
-if (isset($_POST['deconnexion'])) {
-    header('Refresh:0;');
-    echo 'Vous êtes déconnecté';
-}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -23,33 +14,61 @@ if (isset($_POST['deconnexion'])) {
 </head>
 
 <body>
+
+<!-- Menu de la page -->
     <?php
-    include('menu.php');
+    if (isset($_SESSION['id'])) {
+        include('logged_menu.php');
+    } else {
+        include('menu.php');
+    }
     ?>
-    <!-- Formulaire de connexion -->
-
-    <form class="formulaire_connexion" method="post">
-        <!-- titre du formulaire -->
-        <h2 class="formulaire_titre">Connectez vous!</h2>
-
-        <!-- Logo du formulaire -->
-        <div class="formulaire_logo">
-            <img src="image/logo.png" alt="logo du formulaire">
-        </div>
-        <label class="label" for="pseudo">Adresse mail<br />
-            <input class="formulaire_entrees" id="email" type="text" name="email">
-        </label>
-        <br />
-        <div>
-            <label class="label" for="mot_de_passe">Mot de passe<br />
-                <input class="formulaire_entrees" id="mot_de_passe" type="password" name="mot_de_passe">
-            </label>
-            <br />
-        </div>
-        <input class="formulaire_bouton" type="submit" value="Se connecter" name="connecter">
-    </form>
-    <!-- Fin du formulaire de connexion -->
-
+<h1>Les dernières idées de projet</h1>
+    <div class="liste_projet">
+        <?php
+        $bdd = new PDO('mysql:host=127.0.0.1;dbname=mydevteam;charset=utf8', 'phpmyadmin', 'Workout974!', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $reponse = $bdd->query('SELECT * FROM projet ORDER BY id DESC LIMIT 4');
+        while ($donnees = $reponse->fetch()) {
+            echo '<div class="projet_carte">';
+            echo '<div class="projet_chef">';
+            echo '<a href="profil.php?id=' . $donnees['id_chef'] . '"><img class="projet_profil_logo" src="upload/' . $donnees['photo_profil'] . '" alt=""></a>';
+            echo '<div class="projet_noms">';
+            echo '<h3>' . $donnees['nom'] . '</h3>';
+            echo '<h3>' . $donnees['prenom'] . '</h3>';
+            echo '</div>';
+            echo '</div>';
+            echo '<div class="projet_infos">';
+            echo '<h2 class="projet_titre">' . $donnees['titre'] . '</h2>';
+            echo '<p class="projet_description">' . $donnees['description'] . '</p>';
+            echo '</div>';
+            echo '<div class="projet_tip">Compétences recherchées</div>';
+            echo '<div class="projet_competence">';
+            if ($donnees['graphiste'] == 1) {
+                echo '<img class="projet_competence_logo" src="image/graphiste.png" alt="">';
+            }
+            if ($donnees['dev_front'] == 1) {
+                echo '<img class="projet_competence_logo" src="image/dev_front.png" alt="">';
+            }
+            if ($donnees['dev_mobile'] == 1) {
+                echo '<img class="projet_competence_logo" src="image/dev_mobile.png" alt="">';
+            }
+            if ($donnees['dev_back'] == 1) {
+                echo '<img class="projet_competence_logo" src="image/dev_back.png" alt="">';
+            }
+            if ($donnees['web_designer'] == 1) {
+                echo '<img class="projet_competence_logo" src="image/web_designer.png" alt="">';
+            }
+            if ($donnees['social'] == 1) {
+                echo '<img class="projet_competence_logo" src="image/social.png" alt="">';
+            }
+            if ($donnees['expert'] == 1) {
+                echo '<img class="projet_competence_logo" src="image/cyber.png" alt="">';
+            }
+            echo '</div>';
+            echo '</div>';
+        }
+        ?>
+    </div>
     <?php
     include('connexion.php');
     include('footer.php');

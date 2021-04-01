@@ -12,6 +12,8 @@
             $mail = $donnees['mail'];
             $date_inscription = $donnees['date_inscription'];
             $id = $donnees['id'];
+            $photo_profil = $donnees['photo_profil'];
+            $competence = $donnees['competence'];
         }
 
         //Vérification du mot de passe
@@ -30,6 +32,8 @@
                 $_SESSION['prenom'] = $prenom;
                 $_SESSION['date_inscription'] = $date_inscription;
                 $_SESSION['mail'] = $mail;
+                $_SESSION['photo_profil'] = $photo_profil;
+                $_SESSION['competence'] = $competence;
                 echo 'vous etes connecté';
                 header('location:accueil.php');
             } else {

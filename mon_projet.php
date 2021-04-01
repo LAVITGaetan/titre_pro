@@ -1,22 +1,15 @@
 <?php
 session_start();
-
-//Recuperer la photo de profil de l'utilisateur
-$bdd = new PDO('mysql:host=127.0.0.1;dbname=mydevteam;charset=utf8', 'phpmyadmin', 'Workout974!', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-$reponse = $bdd->query('SELECT * FROM membre WHERE id="' . $_SESSION['id'] . '"');
-while ($donnees = $reponse->fetch()) {
-    $photo_profil = $donnees['photo_profil'];
-}
 ?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Votre profil</title>
-
+    <title>Créer un projet</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="https://zupimages.net/up/21/12/kubl.png">
 </head>
 
 <body>
@@ -28,44 +21,18 @@ while ($donnees = $reponse->fetch()) {
         include('menu.php');
     }
     ?>
-    <!-- Image de couverture -->
-
-    <div class="profil">
-        <div class="profil_image">
-            <img id="profil_image" src="upload/<?php echo $photo_profil ?>">
-            <h3 class="profil_nom"><?php echo $_SESSION['nom'] ?></h3><br>
-            <h3 class="profil_prenom"><?php echo $_SESSION['prenom'] ?></h3>
-        </div>
-        <div class="profil_competence-p">
-            <h2><?php echo $_SESSION['competence'] ?></h2>
-        </div>
-        <div class="profil_description">
-            <p class="description_texte">Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis tempora repellendus exercitationem deleniti nihil culpa reiciendis ipsam eius, delectus accusamus cumque excepturi accusantium laboriosam aperiam dolores fugit laborum expedita libero!</p>
-        </div>
-        <div class="profil_informations">
-            <h6>Addresse mail: <?php echo $_SESSION['mail'] ?></h6>
-            <h6>Date d'inscription: <?php echo $_SESSION['date_inscription'] ?></h6>
-            <a class="competence_bouton" href="modifier_profil.php"><h6 class="md_profil">Modifier votre profil</h6></a>
-        </div>
-    </div>
-    <h1>Toutes vos idées de projet</h1>
+    <h1>Créez votre projet et invitez d'autres membres à y participer</h1>
     <div class="liste_projet">
         <?php
         $bdd = new PDO('mysql:host=127.0.0.1;dbname=mydevteam;charset=utf8', 'phpmyadmin', 'Workout974!', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-        $reponse = $bdd->query('SELECT * FROM projet WHERE id_chef="' . $_SESSION['id'] . '" ORDER BY id DESC ');
+        $reponse = $bdd->query('SELECT * FROM projet WHERE id_chef="' . $_SESSION['id'] . '"');
         while ($donnees = $reponse->fetch()) {
             echo '<div class="projet_carte">';
             echo '<div class="projet_chef">';
-            echo '<a href="profil.php?id=' . $donnees['id_chef'] . '"><img class="projet_profil_logo" src="upload/' . $donnees['photo_profil'] . '" alt=""></a>';
+            echo '<a href="profil.php?id=' . $donnees['id_chef'] .'"><img class="projet_profil_logo" src="upload/' . $donnees['photo_profil'] . '" alt=""></a>';
             echo '<div class="projet_noms">';
             echo '<h3>' . $donnees['nom'] . '</h3>';
             echo '<h3>' . $donnees['prenom'] . '</h3>';
-           
-            echo '<a class="competence_bouton" href="modifier_projet.php?id_projet=' . $donnees['id'] . '">Modifier le projet</a>';
-            echo '<form method="post" action="delete.php">
-            <input type="hidden" value="' . $donnees['id'] . '" name="id_projet">
-            <input class="competence_bouton" type="submit" value="Supprimer le projet" name="supprimer">
-          </form>';
             echo '</div>';
             echo '</div>';
             echo '<div class="projet_infos">';
