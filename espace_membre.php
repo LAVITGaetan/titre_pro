@@ -1,22 +1,28 @@
 <?php
 session_start();
 
-//Recuperer la photo de profil de l'utilisateur
-$bdd = new PDO('mysql:host=127.0.0.1;dbname=mydevteam;charset=utf8', 'phpmyadmin', 'Workout974!', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+//Recuperer les infos de l'utilisateur
+$bdd = new PDO('mysql:host=localhost;dbname=id16532210_my_dev_team;charset=utf8', 'id16532210_root', 'csGXE/ZKB1gs9=MJ', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 $reponse = $bdd->query('SELECT * FROM membre WHERE id="' . $_SESSION['id'] . '"');
 while ($donnees = $reponse->fetch()) {
     $photo_profil = $donnees['photo_profil'];
+    $nom = $donnees['nom'];
+    $prenom = $donnees['prenom'];
+    $mail = $donnees['mail'];
+    $photo_profil = $donnees['photo_profil'];
+    $description = $donnees['description']; 
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Votre profil</title>
-
+        <link rel="stylesheet" media="screen and (min-width: 1241px)" href="desktop.css" />
+    <link rel="stylesheet" media="screen and (max-width: 1240px)" href="mobile.css" />
 </head>
 
 <body>
@@ -30,43 +36,38 @@ while ($donnees = $reponse->fetch()) {
     ?>
     <!-- Image de couverture -->
 
-    <div class="profil">
+    <div class="marge_menu profil">
         <div class="profil_image">
             <img id="profil_image" src="upload/<?php echo $photo_profil ?>">
-            <h3 class="profil_nom"><?php echo $_SESSION['nom'] ?></h3><br>
-            <h3 class="profil_prenom"><?php echo $_SESSION['prenom'] ?></h3>
+            <h3 class="profil_nom"><?php echo $nom ?></h3><br>
+            <h3 class="profil_prenom"><?php echo $prenom ?></h3>
         </div>
         <div class="profil_competence-p">
             <h2><?php echo $_SESSION['competence'] ?></h2>
         </div>
         <div class="profil_description">
-            <p class="description_texte">Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis tempora repellendus exercitationem deleniti nihil culpa reiciendis ipsam eius, delectus accusamus cumque excepturi accusantium laboriosam aperiam dolores fugit laborum expedita libero!</p>
+            <p class="description_texte"><?php echo $description;?></p>
         </div>
-        <div class="profil_informations">
-            <h6>Addresse mail: <?php echo $_SESSION['mail'] ?></h6>
+        <div id="encre_projet" class="profil_informations">
+            <h6>Addresse mail: <?php echo $mail ?></h6>
             <h6>Date d'inscription: <?php echo $_SESSION['date_inscription'] ?></h6>
-            <a class="competence_bouton" href="modifier_profil.php"><h6 class="md_profil">Modifier votre profil</h6></a>
+            <a class="modifier_profil_bouton competence_bouton" href="modifier_profil.php"><h6 class="md_profil">Modifier votre profil</h6></a>
         </div>
     </div>
     <h1>Toutes vos idées de projet</h1>
     <div class="liste_projet">
         <?php
-        $bdd = new PDO('mysql:host=127.0.0.1;dbname=mydevteam;charset=utf8', 'phpmyadmin', 'Workout974!', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd = new PDO('mysql:host=localhost;dbname=id16532210_my_dev_team;charset=utf8', 'id16532210_root', 'csGXE/ZKB1gs9=MJ', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         $reponse = $bdd->query('SELECT * FROM projet WHERE id_chef="' . $_SESSION['id'] . '" ORDER BY id DESC ');
         while ($donnees = $reponse->fetch()) {
             echo '<div class="projet_carte">';
-            echo '<div class="projet_chef">';
-            echo '<a href="profil.php?id=' . $donnees['id_chef'] . '"><img class="projet_profil_logo" src="upload/' . $donnees['photo_profil'] . '" alt=""></a>';
-            echo '<div class="projet_noms">';
-            echo '<h3>' . $donnees['nom'] . '</h3>';
-            echo '<h3>' . $donnees['prenom'] . '</h3>';
-           
-            echo '<a class="competence_bouton" href="modifier_projet.php?id_projet=' . $donnees['id'] . '">Modifier le projet</a>';
+            echo '<div class="projet_operations">';
+            echo '<a class="competence_bouton md_text" href="modifier_projet.php?id_projet=' . $donnees['id'] . '">Modifier le projet</a>';
             echo '<form method="post" action="delete.php">
             <input type="hidden" value="' . $donnees['id'] . '" name="id_projet">
             <input class="competence_bouton" type="submit" value="Supprimer le projet" name="supprimer">
           </form>';
-            echo '</div>';
+
             echo '</div>';
             echo '<div class="projet_infos">';
             echo '<h2 class="projet_titre">' . $donnees['titre'] . '</h2>';
@@ -75,25 +76,25 @@ while ($donnees = $reponse->fetch()) {
             echo '<div class="projet_tip">Compétences recherchées</div>';
             echo '<div class="projet_competence">';
             if ($donnees['graphiste'] == 1) {
-                echo '<img class="projet_competence_logo" src="image/graphiste.png" alt="">';
+                echo '<img class="projet_competence_logo" src="image/graphiste.png" alt="logo de competence">';
             }
             if ($donnees['dev_front'] == 1) {
-                echo '<img class="projet_competence_logo" src="image/dev_front.png" alt="">';
+                echo '<img class="projet_competence_logo" src="image/dev_front.png" alt="logo de competence">';
             }
             if ($donnees['dev_mobile'] == 1) {
-                echo '<img class="projet_competence_logo" src="image/dev_mobile.png" alt="">';
+                echo '<img class="projet_competence_logo" src="image/dev_mobile.png" alt="logo de competence">';
             }
             if ($donnees['dev_back'] == 1) {
-                echo '<img class="projet_competence_logo" src="image/dev_back.png" alt="">';
+                echo '<img class="projet_competence_logo" src="image/dev_back.png" alt="logo de competence">';
             }
             if ($donnees['web_designer'] == 1) {
-                echo '<img class="projet_competence_logo" src="image/web_designer.png" alt="">';
+                echo '<img class="projet_competence_logo" src="image/web_designer.png" alt="logo de competence">';
             }
             if ($donnees['social'] == 1) {
-                echo '<img class="projet_competence_logo" src="image/social.png" alt="">';
+                echo '<img class="projet_competence_logo" src="image/social.png" alt="logo de competence">';
             }
             if ($donnees['expert'] == 1) {
-                echo '<img class="projet_competence_logo" src="image/cyber.png" alt="">';
+                echo '<img class="projet_competence_logo" src="image/cyber.png" alt="logo de competence">';
             }
             echo '</div>';
             echo '</div>';

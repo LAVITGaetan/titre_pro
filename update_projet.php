@@ -44,7 +44,7 @@ if(isset($_POST['modifier'])){
     else{
         $expert = 0;
     }
-    $bdd = new PDO('mysql:host=127.0.0.1;dbname=mydevteam;charset=utf8', 'phpmyadmin', 'Workout974!', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+    $bdd = new PDO('mysql:host=localhost;dbname=id16532210_my_dev_team;charset=utf8', 'id16532210_root', 'csGXE/ZKB1gs9=MJ', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
     $reponse = $bdd->query('SELECT * FROM projet');
     $requete = 'UPDATE projet SET titre="' . $_POST['titre'] . '", description="' . $_POST['description'] . '", graphiste="' . $graphiste . '", dev_front="' . $dev_front . '", dev_mobile="' . $dev_mobile . '", dev_back="' . $dev_back . '", web_designer="' . $web_designer . '", social="' . $social . '", expert="' . $expert . '" WHERE id="' . $_POST['id_projet'] .'"';
     $resultat = $bdd->query($requete);

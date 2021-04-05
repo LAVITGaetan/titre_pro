@@ -4,6 +4,7 @@ session_start();
 // Si l'utilisateur veut ajouter un fichier 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     
+    
     // Vérifier que le fichier ne contienne pas d'erreurs et récuperer le nom, la taille et le type de l'image
     if(isset($_FILES["photo"]) && $_FILES["photo"]["error"] == 0){
         $allowed = array("jpg" => "image/jpg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png");
@@ -23,7 +24,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         if(in_array($filetype, $allowed)){
 
             // Connexion à la BDD
-            $bdd = new PDO('mysql:host=127.0.0.1;dbname=mydevteam;charset=utf8', 'phpmyadmin', 'Workout974!', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+            $bdd = new PDO('mysql:host=localhost;dbname=id16532210_my_dev_team;charset=utf8', 'id16532210_root', 'csGXE/ZKB1gs9=MJ', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
             $reponse = $bdd->query('SELECT * FROM membre');
 
             // Si le fichier existe déjà
@@ -40,6 +41,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 move_uploaded_file($_FILES["photo"]["tmp_name"], "upload/" . $filename);           
                 $requete = 'UPDATE membre SET photo_profil="' . $filename . '" WHERE id="' . $_SESSION['id'] .'"';
                 $resultat = $bdd->query($requete);
+                $bdd = new PDO('mysql:host=localhost;dbname=id16532210_my_dev_team;charset=utf8', 'id16532210_root', 'csGXE/ZKB1gs9=MJ', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+                $reponse = $bdd->query('SELECT * FROM projet');
+                $requete = 'UPDATE projet SET photo_profil="' . $filename . '" WHERE id_chef="' . $_SESSION['id'] .'"';
+                $resultat = $bdd->query($requete);
                 session_start();
                 $_SESSION['photo_profil'] = $filename;
                 header('location:espace_membre.php');
@@ -48,7 +53,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             echo "Une erreur est survenue, réessayez."; 
         }
     } else{
-        echo "Error: " . $_FILES["photo"]["error"];
+        echo "Erreur Réessayez";
     }
 }
 ?>

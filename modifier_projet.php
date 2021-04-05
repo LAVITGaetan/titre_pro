@@ -1,11 +1,29 @@
 <?php
+
+//Recuperer les infos de l'utilisateur
+$bdd = new PDO('mysql:host=localhost;dbname=id16532210_my_dev_team;charset=utf8', 'id16532210_root', 'csGXE/ZKB1gs9=MJ', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+$reponse = $bdd->query('SELECT * FROM membre WHERE id="' . $_SESSION['id'] . '"');
+while ($donnees = $reponse->fetch()) {
+    $photo_profil = $donnees['photo_profil'];
+    $nom = $donnees['nom'];
+    $prenom = $donnees['prenom'];
+    $mail = $donnees['mail'];
+    $photo_profil = $donnees['photo_profil'];
+}
 session_start();
-$bdd = new PDO('mysql:host=127.0.0.1;dbname=mydevteam;charset=utf8', 'phpmyadmin', 'Workout974!', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-    $reponse = $bdd->query('SELECT * FROM projet WHERE id="' . $_GET['id_projet'] . '"');
-    while($donnees = $reponse->fetch()){
-        $titre = $donnees['titre'];
-        $description = $donnees['description'];
-    }
+$bdd = new PDO('mysql:host=localhost;dbname=id16532210_my_dev_team;charset=utf8', 'id16532210_root', 'csGXE/ZKB1gs9=MJ', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+$reponse = $bdd->query('SELECT * FROM projet WHERE id="' . $_GET['id_projet'] . '"');
+while ($donnees = $reponse->fetch()) {
+    $titre = $donnees['titre'];
+    $description = $donnees['description'];
+    $graphiste = $donnees['graphiste'];
+    $dev_front = $donnees['dev_front'];
+    $dev_mobile = $donnees['dev_mobile'];
+    $dev_back = $donnees['dev_back'];
+    $web_designer = $donnees['web_designer'];
+    $social = $donnees['social'];
+    $expert = $donnees['expert'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -15,6 +33,8 @@ $bdd = new PDO('mysql:host=127.0.0.1;dbname=mydevteam;charset=utf8', 'phpmyadmin
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modifier une idée de projet</title>
+    <link rel="stylesheet" media="screen and (min-width: 1241px)" href="desktop.css" />
+    <link rel="stylesheet" media="screen and (max-width: 1240px)" href="mobile.css" />
 </head>
 
 <body>
@@ -27,37 +47,40 @@ $bdd = new PDO('mysql:host=127.0.0.1;dbname=mydevteam;charset=utf8', 'phpmyadmin
     }
     ?>
 
-    <h1>Modifier votre projet</h1>
+    <h1 class="marge_menu">Modifier votre projet</h1>
 
     <form class="formulaire_projet" action="update_projet.php" method="POST">
-        <label class="label" for="titre">Titre du projet<br />
-            <input class="formulaire_entrees" id="titre" type="text" name="titre" value="<?php echo $titre;?>">
+        <label class="formulaire_titre_projet label" for="titre">Titre du projet<br />
+            <input class="formulaire_titre_projet formulaire_entrees" id="titre" type="text" name="titre" value="<?php echo htmlentities($titre); ?>">
+        </label><br>
+        <label class="formulaire_titre_projet label" for="description">Description du projet<br />
+            <textarea class="formulaire_entrees" id="description" name="description"><?php echo htmlentities($description); ?></textarea>
         </label>
-        <label class="label" for="description">Description du projet<br />
-            <textarea class="formulaire_entrees" id="description" name="description"><?php echo $description;?></textarea>
-        </label> 
-        <input type="checkbox" name="graphiste"><label>Graphiste</label>
-        <input type="checkbox" name="dev_front"><label>Développeur Front-End</label>
-        <input type="checkbox" name="dev_mobile"><label>Développeur Mobile</label>
-        <input type="checkbox" name="dev_back"><label>Développeur Back-End</label>
-        <input type="checkbox" name="web_designer"><label>Web Designer</label>
-        <input type="checkbox" name="social"><label>Social Media Manager</label>
-        <input type="checkbox" name="expert"><label>Expert en cyber-sécurité</label>
-        <input type="hidden" name="id_projet" value="<?php echo $_GET['id_projet'];?>">
-        <input class="formulaire_bouton" type="submit" value="Modifier le projet" name="modifier">
+        <div class="form_check">
+            <input class="checkbox" type="checkbox" <?php if($graphiste == 1){echo 'checked';}?> name="graphiste"><label>Graphiste</label><br>
+            <input class="checkbox" type="checkbox" <?php if($dev_front == 1){echo 'checked';}?> name="dev_front"><label>Développeur Front-End</label><br>
+            <input class="checkbox" type="checkbox" <?php if($dev_mobile == 1){echo 'checked';}?> name="dev_mobile"><label>Développeur Mobile</label><br>
+            <input class="checkbox" type="checkbox" <?php if($dev_back == 1){echo 'checked';}?> name="dev_back"><label>Développeur Back-End</label><br>
+            <input class="checkbox" type="checkbox" <?php if($web_designer == 1){echo 'checked';}?> name="web_designer"><label>Web Designer</label><br>
+            <input class="checkbox" type="checkbox" <?php if($social == 1){echo 'checked';}?> name="social"><label>Social Media Manager</label><br>
+            <input class="checkbox" type="checkbox" <?php if($expert == 1){echo 'checked';}?> name="expert"><label>Expert en cyber-sécurité</label><br>
+            <input class="checkbox" type="hidden" name="id_projet" value="<?php echo $_GET['id_projet']; ?>">
+        </div>
+        <input class="formulaire_titre_projet competence_bouton form_submit" type="submit" value="Modifier le projet" name="modifier">
+
     </form>
     <div class="liste_projet">
         <?php
-        $bdd = new PDO('mysql:host=127.0.0.1;dbname=mydevteam;charset=utf8', 'phpmyadmin', 'Workout974!', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd = new PDO('mysql:host=localhost;dbname=id16532210_my_dev_team;charset=utf8', 'id16532210_root', 'csGXE/ZKB1gs9=MJ', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         $reponse = $bdd->query('SELECT * FROM projet WHERE id="' . $_GET['id_projet'] . '"');
         while ($donnees = $reponse->fetch()) {
             echo '<div class="projet_carte">';
             echo '<div class="projet_chef">';
-            echo '<a href="profil.php?id=' . $donnees['id_chef'] . '"><img class="projet_profil_logo" src="upload/' . $donnees['photo_profil'] . '" alt=""></a>';
+            echo '<a href="profil.php?id=' . $donnees['id_chef'] . '"><img class="projet_profil_logo" src="upload/' . $donnees['photo_profil'] . '" alt="photo de profil"></a>';
             echo '<div class="projet_noms">';
             echo '<h3>' . $donnees['nom'] . '</h3>';
             echo '<h3>' . $donnees['prenom'] . '</h3>';
-                  echo'<a href="modifier_projet.php?id_projet='. $donnees['id'] . '">Modifier le projet</a>';
+            echo '<a href="modifier_projet.php?id_projet=' . $donnees['id'] . '">Modifier le projet</a>';
             echo '</div>';
             echo '</div>';
             echo '<div class="projet_infos">';
@@ -67,25 +90,25 @@ $bdd = new PDO('mysql:host=127.0.0.1;dbname=mydevteam;charset=utf8', 'phpmyadmin
             echo '<div class="projet_tip">Compétences recherchées</div>';
             echo '<div class="projet_competence">';
             if ($donnees['graphiste'] == 1) {
-                echo '<img class="projet_competence_logo" src="image/graphiste.png" alt="">';
+                echo '<img class="projet_competence_logo" src="image/graphiste.png" alt="logo de competence">';
             }
             if ($donnees['dev_front'] == 1) {
-                echo '<img class="projet_competence_logo" src="image/dev_front.png" alt="">';
+                echo '<img class="projet_competence_logo" src="image/dev_front.png" alt="logo de competence">';
             }
             if ($donnees['dev_mobile'] == 1) {
-                echo '<img class="projet_competence_logo" src="image/dev_mobile.png" alt="">';
+                echo '<img class="projet_competence_logo" src="image/dev_mobile.png" alt="logo de competence">';
             }
             if ($donnees['dev_back'] == 1) {
-                echo '<img class="projet_competence_logo" src="image/dev_back.png" alt="">';
+                echo '<img class="projet_competence_logo" src="image/dev_back.png" alt="logo de competence">';
             }
             if ($donnees['web_designer'] == 1) {
-                echo '<img class="projet_competence_logo" src="image/web_designer.png" alt="">';
+                echo '<img class="projet_competence_logo" src="image/web_designer.png" alt="logo de competence">';
             }
             if ($donnees['social'] == 1) {
-                echo '<img class="projet_competence_logo" src="image/social.png" alt="">';
+                echo '<img class="projet_competence_logo" src="image/social.png" alt="logo de competence">';
             }
             if ($donnees['expert'] == 1) {
-                echo '<img class="projet_competence_logo" src="image/cyber.png" alt="">';
+                echo '<img class="projet_competence_logo" src="image/cyber.png" alt="logo de competence">';
             }
             echo '</div>';
             echo '</div>';

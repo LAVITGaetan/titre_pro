@@ -3,7 +3,7 @@
 
     if (isset($_POST['connecter']) & !empty($_POST['email']) & !empty($_POST['mot_de_passe'])) {
         //Récuperation de l'utilisateur via son pseudo
-        $bdd = new PDO('mysql:host=127.0.0.1;dbname=mydevteam;charset=utf8', 'phpmyadmin', 'Workout974!', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd = new PDO('mysql:host=localhost;dbname=id16532210_my_dev_team;charset=utf8', 'id16532210_root', 'csGXE/ZKB1gs9=MJ', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         $reponse = $bdd->query('SELECT * FROM membre WHERE mail ="' . $_POST['email'] . '"');
         while ($donnees = $reponse->fetch()) {
             $nom = $donnees['nom'];
@@ -34,8 +34,6 @@
                 $_SESSION['mail'] = $mail;
                 $_SESSION['photo_profil'] = $photo_profil;
                 $_SESSION['competence'] = $competence;
-                echo 'vous etes connecté';
-                header('location:accueil.php');
             } else {
                 echo 'Mauvais identifiants ou mot de passe';
             }

@@ -1,7 +1,6 @@
-<link rel="stylesheet" href="style.css">
 <div class="menu">
     <div class="menu_logo">
-       <a href="accueil.php"><img id="menu_logo" src="image/logo.png" alt="logo du site"></a>
+       <a href="index.php"><img id="menu_logo" src="image/logo.png" alt="logo du site"></a>
     </div>
     <div class="menu_liens">
         <ul class="liens_liste">
@@ -15,4 +14,21 @@
     </div>
 </div>
 
-<script src="script.js"></script>
+<div class="mobile_menu">
+<nav role="navigation">
+  <div id="menuToggle">
+    <input type="checkbox" />
+    <span></span>
+    <span></span>
+    <span></span>
+    <ul id="menu">
+      <a href="creer_projet.php"><li>Créer un projet</li></a>
+      <a href="liste_projet.php"><li>Rejoindre un projet</li></a>
+      <a href="competence.php"><li>Compétences</li></a>
+      <a href="mon_projet.php"><li>Mon projet</li></a>
+      <a href="connexion_membre.php"><li>Connexion</li></a>
+      <a href="inscription_membre.php"><li>Inscription</li></a></a>
+    </ul>
+  </div>
+</nav>
+</div>

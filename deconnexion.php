@@ -1,5 +1,6 @@
 <?php
+session_start();
 session_destroy();
-header('location:accueil.php');
+header('location:index.php');
 ?>
 

@@ -1,7 +1,18 @@
 <?php
 session_start();
+
+//Recuperer les infos de l'utilisateur
+$bdd = new PDO('mysql:host=localhost;dbname=id16532210_my_dev_team;charset=utf8', 'id16532210_root', 'csGXE/ZKB1gs9=MJ', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+$reponse = $bdd->query('SELECT * FROM membre WHERE id="' . $_SESSION['id'] . '"');
+while ($donnees = $reponse->fetch()) {
+    $photo_profil = $donnees['photo_profil'];
+    $nom = $donnees['nom'];
+    $prenom = $donnees['prenom'];
+    $mail = $donnees['mail'];
+    $photo_profil = $donnees['photo_profil'];
+}
 // Connexion à la base de données
-$bdd = new PDO('mysql:host=127.0.0.1;dbname=mydevteam;charset=utf8', 'phpmyadmin', 'Workout974!', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+$bdd = new PDO('mysql:host=localhost;dbname=id16532210_my_dev_team;charset=utf8', 'id16532210_root', 'csGXE/ZKB1gs9=MJ', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 $reponse = $bdd->query('SELECT * FROM membre');
 
 // Si les champs sont remplis et que l'utilisateur clique sur le bouton
@@ -68,7 +79,7 @@ if (
         $requete = 'INSERT INTO projet VALUES(NULL, "' . $_SESSION['id'] . '", "' . $_SESSION['photo_profil'] . '", "' . $_SESSION['nom'] . '", "' . $_SESSION['prenom'] . '", "' . $_POST['titre'] . '", "' . $_POST['description'] . '", "' . $graphiste . '"
         , "' . $dev_front . '", "' . $dev_mobile . '", "' . $dev_back . '", "' . $web_designer . '", "' . $social . '", "' . $expert . '", "' . $date_publication . '")';
         $resultat = $bdd->query($requete);
-        header('location:creer_projet.php');
+        header('location:liste_projet.php');
     }
 
     }

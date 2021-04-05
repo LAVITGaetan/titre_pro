@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyDevTeam inscription</title>
     <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" media="screen and (min-width: 1241px)" href="desktop.css" />
+<link rel="stylesheet" media="screen and (max-width: 1240px)" href="mobile.css" />
 </head>
 
 <body>
@@ -36,6 +37,11 @@
         <!-- prenom-->
         <label class="label" for="prenom">Prenom<br>
             <input class="input_formulaire" id="prenom" type="text" name="prenom" pattern="^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z._]+(?<![_.])$"><br />
+        </label>
+
+        <!-- Description-->
+        <label class="formulaire_titre_projet label" for="description">Votre description<br />
+            <textarea class="formulaire_entrees textarea" id="description" name="description"><?php echo $description; ?></textarea>
         </label>
 
         <!-- Email-->
@@ -68,7 +74,7 @@
         </div>
 
         <!-- Bouton d'enregistrement-->
-        <input class="formulaire_bouton" type="submit" value="S'inscrire" name="enregistrer">
+        <input class="competence_bouton" type="submit" value="S'inscrire" name="enregistrer">
         <div id="formulaire_alerte"></div>
     </form>
     <!-- Fin du formulaire d'inscription -->
@@ -77,7 +83,7 @@
     <?php
 
     // Connexion à la base de données
-    $bdd = new PDO('mysql:host=127.0.0.1;dbname=mydevteam;charset=utf8', 'phpmyadmin', 'Workout974!', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+    $bdd = new PDO('mysql:host=localhost;dbname=id16532210_my_dev_team;charset=utf8', 'id16532210_root', 'csGXE/ZKB1gs9=MJ', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
     $reponse = $bdd->query('SELECT * FROM membre');
 
     // Si les champs sont remplis et que l'utilisateur clique sur le bouton
@@ -98,17 +104,18 @@
             $_POST['prenom'] = htmlentities($_POST['prenom'], ENT_QUOTES);
             $_POST['mot_de_passe'] = htmlentities($_POST['mot_de_passe'], ENT_QUOTES);
             $_POST['email'] = htmlentities($_POST['email'], ENT_QUOTES);
+            $_POST['description'] = htmlentities($_POST['description'], ENT_QUOTES);
 
             //Cryptage du mot de passe et récupération de la date actuelle
             $mot_de_passe_crypte = password_hash($_POST['mot_de_passe'], PASSWORD_DEFAULT);
             $date_inscription = date("Y-m-d");
 
             // Requete d'insertion des données dans la table 'membre'
-            $requete = 'INSERT INTO membre VALUES(NULL, "' . $_POST['nom'] . '", "' . $_POST['prenom'] . '", "' . $_POST['competence'] .'", "' . $_POST['email'] . '", "' . $mot_de_passe_crypte . '", "' . $date_inscription . '", NULL)';
+            $requete = 'INSERT INTO membre VALUES(NULL, "' . $_POST['nom'] . '", "' . $_POST['prenom'] . '", "' . $_POST['description'] . '", "' . $_POST['competence'] .'", "' . $_POST['email'] . '", "' . $mot_de_passe_crypte . '", "' . $date_inscription . '", NULL)';
             $resultat = $bdd->query($requete);
 
             //Redirection vers la page de connexion
-            header('location:accueil.php');
+            header('location:index.php');
             
         }else{
             echo 'Vos identifiants ne correspondent pas!';

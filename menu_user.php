@@ -1,7 +1,7 @@
-<link rel="stylesheet" href="style.css">
+
 <div class="menu">
     <div class="menu_logo">
-       <a href="accueil.php"><img id="menu_logo" src="image/logo.png" alt="logo du site"></a>
+       <a href="index.php"><img id="menu_logo" src="image/logo.png" alt="logo du site"></a>
     </div>
     <div class="menu_liens">
         <ul class="liens_liste">
